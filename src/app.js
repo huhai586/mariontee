@@ -5,6 +5,7 @@ import $ from 'jquery';
 import _ from 'underscore';
 import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
+
 // // // import xx from './templates/layout.html'
 // // // console.log(xx)
 // //
@@ -74,4 +75,45 @@ import Marionette from 'backbone.marionette';
 // // layout.menu.show(new MyMenuView());
 // // layout.content.show(new MyContentView());
 
-var model=Backbone.Model.extend();
+// var model=Backbone.Model.extend();
+
+
+
+var child = Marionette.LayoutView.extend({  // 2
+    el:"#app-hook",
+    template:require("./aa.html"),
+    onRender:function(){
+        debugger
+    },
+    onBeforeShow:function(){
+        console.log("before渲染的el",this.el);
+    }
+
+
+
+});
+
+
+var parent = Backbone.View.extend({  // 2
+   initialize:function(){
+       var oo=new child
+       this.listenTo(oo,"all",function(data){
+           console.log("接收到的数据是",data)
+       })
+       oo.render()
+       // Marionette.triggerMethodOn(this,"haha")
+
+   },
+    onHaha:function(){
+        console.log("haha is trigged",this)
+    }
+
+
+});
+
+new parent;
+
+
+
+
+
